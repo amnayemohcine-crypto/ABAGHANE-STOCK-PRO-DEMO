@@ -1,145 +1,107 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ABAGHANE STOCK PRO</title>
 <style>
-:root{--g:#16834a;--d:#14251d;--gold:#d7ad48}
 *{box-sizing:border-box}
-body{margin:0;background:#f3f6f4;font-family:Arial;color:#17251d}
-header{background:var(--d);color:white;padding:24px 16px;text-align:center}
-header h1{font-size:23px;margin:5px}
-header p{margin:7px;color:var(--gold)}
-main{max-width:760px;margin:auto;padding:14px}
-.card{background:white;padding:16px;border-radius:14px;margin:12px 0;box-shadow:0 2px 9px #0000000d}
-h2{font-size:18px;color:var(--g);margin:0 0 13px}
-label{font-size:13px;color:#53635a}
-input,select{width:100%;padding:12px;margin:5px 0 10px;border:1px solid #d8e0da;border-radius:9px;font-size:16px;background:white}
-button{border:0;border-radius:9px;padding:13px;background:var(--g);color:white;font-size:15px;font-weight:bold;cursor:pointer}
-button.secondary{background:#e8eee9;color:#244331}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:#eaf4ed;padding:14px;border-radius:10px}
-.stat small{display:block;color:#53635a}
-.stat strong{font-size:20px;color:var(--g)}
-table{width:100%;border-collapse:collapse;font-size:13px}
-td,th{padding:9px 5px;border-bottom:1px solid #eee;text-align:center}
-th{color:var(--g)}
-.actions{display:flex;gap:7px;flex-wrap:wrap}
-.del{background:#b83d3d;padding:7px}
-footer{text-align:center;color:#718078;font-size:12px;padding:20px}
+body{margin:0;background:#f3f6f3;color:#18251d;font-family:Arial,sans-serif}
+header{background:#123d2b;color:white;padding:25px 18px;border-radius:0 0 25px 25px}
+.brand{font-size:22px;font-weight:bold;color:#d8b65b}
+header p{color:#d5e5da;margin-bottom:0}
+main{padding:16px;max-width:650px;margin:auto}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:-5px}
+.stat,.panel{background:white;border-radius:15px;padding:16px;box-shadow:0 3px 12px #0000000b}
+.stat small{color:#718078}
+.stat strong{display:block;font-size:21px;margin-top:9px;color:#17633e}
+.panel{margin-top:15px}
+h3{margin:0 0 15px}
+input,select{width:100%;padding:13px;border:1px solid #dce5de;border-radius:10px;margin:6px 0 12px;font-size:15px;background:white}
+button{border:0;border-radius:10px;padding:13px;background:#17633e;color:white;font-size:15px;font-weight:bold;width:100%;cursor:pointer}
+button.secondary{background:#e8f1eb;color:#17633e}
+.product{border-bottom:1px solid #edf0ed;padding:13px 0}
+.product:last-child{border:0}
+.product b{display:block;font-size:16px}
+.product small{color:#718078;display:block;margin-top:6px}
+.price{color:#17633e;font-weight:bold;margin-top:7px}
+.delete{background:#fae9e7;color:#b33c30;width:auto;padding:7px 12px;margin-top:8px}
 </style>
 </head>
 <body>
 <header>
-<h1>ABAGHANE STOCK PRO</h1>
-<p>ABAGHANE INVENTAIRE PRO</p>
-<div>نظام احترافي لجرد المخزون</div>
+<div class="brand">ABAGHANE STOCK PRO</div>
+<p>نظام احترافي لتدبير وجرد المخزون</p>
 </header>
 <main>
-<div class="card">
-<h2>معلومات الجرد</h2>
-<label>اسم المحل</label>
-<input id="shop" placeholder="اسم المحل التجاري">
-<div class="actions">
-<button onclick="newInventory()">جرد جديد</button>
-<button class="secondary" onclick="printReport()">طباعة التقرير PDF</button>
-</div>
-</div>
-
 <div class="stats">
 <div class="stat"><small>عدد أنواع السلع</small><strong id="count">0</strong></div>
-<div class="stat"><small>قيمة المخزون بالشراء</small><strong id="total">0.00 DH</strong></div>
+<div class="stat"><small>قيمة المخزون (DH)</small><strong id="total">0.00</strong></div>
 </div>
 
-<div class="card">
-<h2>إضافة سلعة</h2>
-<label>الباركود</label>
-<input id="barcode" placeholder="امسح الباركود هنا" inputmode="numeric">
-<label>اسم السلعة</label>
+<section class="panel">
+<h3>＋ إضافة سلعة جديدة</h3>
+<input id="barcode" placeholder="الباركود (يمكن استعمال السكانير)">
 <input id="name" placeholder="اسم السلعة">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div>
 <label>الكمية</label>
-<input id="qty" type="number" min="0" step="0.01" placeholder="الكمية">
+<input id="qty" type="number" step="0.01" placeholder="0">
+</div>
+<div>
 <label>وحدة القياس</label>
 <select id="unit">
-<option value="قطعة">قطعة</option>
-<option value="كرتونة">كرتونة</option>
-<option value="KG">KG</option>
+<option>قطعة</option><option>كرتونة</option><option>KG</option>
 </select>
+</div>
+</div>
 <label>ثمن الشراء للوحدة (DH)</label>
-<input id="price" type="number" min="0" step="0.01" placeholder="ثمن الشراء">
-<button style="width:100%" onclick="addItem()">+ إضافة السلعة</button>
-</div>
+<input id="price" type="number" step="0.01" placeholder="0.00">
+<button onclick="addProduct()">حفظ السلعة</button>
+</section>
 
-<div class="card">
-<h2>لائحة المخزون</h2>
-<div style="overflow-x:auto">
-<table>
-<thead><tr><th>السلعة</th><th>الكمية</th><th>الوحدة</th><th>الثمن</th><th>القيمة</th><th>حذف</th></tr></thead>
-<tbody id="list"></tbody>
-</table>
-</div>
-</div>
-<div class="card">
-<h2>الإجمالي</h2>
-<p>القيمة الإجمالية للمخزون بثمن الشراء:</p>
-<h2 id="grand">0.00 DH</h2>
-</div>
+<section class="panel">
+<h3>📦 لائحة المخزون</h3>
+<input id="search" placeholder="بحث بالاسم أو الباركود..." oninput="render()">
+<div id="products"></div>
+</section>
+<p style="text-align:center;color:#829087;font-size:12px">ABAGHANE FOOD © ABAGHANE INVENTAIRE PRO</p>
 </main>
-<footer>ABAGHANE FOOD © ABAGHANE STOCK PRO</footer>
-
 <script>
-let items=JSON.parse(localStorage.getItem("abaghane_items")||"[]");
-const $=id=>document.getElementById(id);
-function save(){localStorage.setItem("abaghane_items",JSON.stringify(items));render()}
+let items=JSON.parse(localStorage.getItem("abaghane_stock")||"[]");
+function save(){localStorage.setItem("abaghane_stock",JSON.stringify(items));render()}
+function addProduct(){
+let barcode=document.getElementById("barcode").value.trim();
+let name=document.getElementById("name").value.trim();
+let qty=Number(document.getElementById("qty").value);
+let unit=document.getElementById("unit").value;
+let price=Number(document.getElementById("price").value);
+if(!name||qty<=0||price<0){alert("دخل اسم السلعة والكمية والثمن بشكل صحيح");return}
+let old=items.find(x=>barcode&&x.barcode===barcode);
+if(old){old.qty+=qty;old.price=price}
+else items.push({barcode,name,qty,unit,price});
+["barcode","name","qty","price"].forEach(id=>document.getElementById(id).value="");
+save();
+}
+function removeItem(i){if(confirm("واش متأكد من حذف هاد السلعة؟")){items.splice(i,1);save()}}
 function render(){
-$("list").innerHTML="";
-let total=0;
-items.forEach((p,i)=>{
-let value=p.qty*p.price;total+=value;
-$("list").innerHTML+=`<tr>
-<td>${escapeHTML(p.name)}</td><td>${p.qty}</td><td>${p.unit}</td>
-<td>${p.price.toFixed(2)}</td><td>${value.toFixed(2)}</td>
-<td><button class="del" onclick="removeItem(${i})">حذف</button></td></tr>`;
+let q=document.getElementById("search").value.toLowerCase();
+let filtered=items.filter(x=>x.name.toLowerCase().includes(q)||(x.barcode||"").includes(q));
+document.getElementById("count").textContent=items.length;
+document.getElementById("total").textContent=items.reduce((s,x)=>s+x.qty*x.price,0).toFixed(2);
+document.getElementById("products").innerHTML=filtered.length?filtered.map(x=>{
+let i=items.indexOf(x);
+return `<div class="product"><b>${x.name}</b><small>الباركود: ${x.barcode||"غير متوفر"} | الكمية: ${x.qty} ${x.unit}</small><div class="price">${(x.qty*x.price).toFixed(2)} DH</div><small>ثمن الشراء: ${x.price} DH</small><button class="delete" onclick="removeItem(${i})">حذف</button></div>`
+}).join(""):"<p style='color:#89958e;text-align:center'>مازال ما كايناش سلع فالمخزون</p>";
+}
+document.getElementById("barcode").addEventListener("keydown",e=>{
+if(e.key==="Enter"){
+let code=e.target.value.trim();
+let found=items.find(x=>x.barcode===code&&code);
+if(found){found.qty+=1;save();e.target.value="";alert("تزادت وحدة من: "+found.name)}
+else document.getElementById("name").focus();
+}
 });
-$("count").textContent=items.length;
-$("total").textContent=total.toFixed(2)+" DH";
-$("grand").textContent=total.toFixed(2)+" DH";
-}
-function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function addItem(){
-let barcode=$("barcode").value.trim(),name=$("name").value.trim();
-let qty=Number($("qty").value),price=Number($("price").value),unit=$("unit").value;
-if(!name||!qty||qty<0||price<0||$("price").value===""){alert("عمر معلومات السلعة كاملة");return}
-if(barcode&&items.some(p=>p.barcode===barcode)){alert("هذا الباركود مسجل من قبل");return}
-items.push({barcode,name,qty,price,unit});
-$("barcode").value=$("name").value=$("qty").value=$("price").value="";
-save();$("barcode").focus();
-}
-function removeItem(i){if(confirm("واش متأكد من حذف السلعة؟")){items.splice(i,1);save()}}
-function newInventory(){
-if(!confirm("واش بغيتي تبدأ جرد جديد؟ غادي يتحيد الجرد الحالي من هاد الهاتف."))return;
-items=[];save();
-}
-function printReport(){
-let shop=escapeHTML($("shop").value||"المحل التجاري");
-let rows=items.map(p=>`<tr><td>${escapeHTML(p.name)}</td><td>${p.qty}</td><td>${p.unit}</td><td>${p.price.toFixed(2)}</td><td>${(p.qty*p.price).toFixed(2)}</td></tr>`).join("");
-let total=items.reduce((s,p)=>s+p.qty*p.price,0);
-let w=window.open("","_blank");
-if(!w){alert("سمح للمتصفح بفتح نافذة التقرير");return}
-w.document.write(`<html lang="ar" dir="rtl"><meta charset="UTF-8"><title>تقرير الجرد</title><body style="font-family:Arial;padding:25px"><h2>ABAGHANE INVENTAIRE PRO</h2><h3>${shop}</h3><p>تاريخ الجرد: ${new Date().toLocaleDateString("ar-MA")}</p><table border="1" cellpadding="8" cellspacing="0" width="100%"><tr><th>السلعة</th><th>الكمية</th><th>الوحدة</th><th>ثمن الشراء</th><th>القيمة</th></tr>${rows}</table><h3>المجموع: ${total.toFixed(2)} DH</h3><br><p>التوقيع والختم: __________________</p><script>window.onload=()=>window.print()<\/script></body></html>`);
-w.document.close();
-}
-$("barcode").addEventListener("keydown",e=>{
-if(e.key!=="Enter")return;
-let b=e.target.value.trim();if(!b)return;
-let old=items.find(p=>p.barcode===b);
-if(old){old.qty=Number(old.qty)+1;save();e.target.value="";alert("تمت زيادة كمية "+old.name+" بوحدة واحدة")}
-else{$("name").focus();alert("باركود جديد: أدخل اسم السلعة وباقي المعلومات")}
-});
-$("shop").value=localStorage.getItem("abaghane_shop")||"";
-$("shop").addEventListener("change",()=>localStorage.setItem("abaghane_shop",$("shop").value));
 render();
 </script>
 </body>
